@@ -56,3 +56,9 @@ class ItemListDetails(APIView):
         if serializer_obj.is_valid(raise_exception=True):
             saved_item = serializer_obj.save()
             return Response(f'{"Success : ""Item '{}' updated succesfully".format(saved_item.name)}')
+
+    
+    #Delete an Item
+    def delete(self,request,id):
+        item = Items.objects.filter(item_id =id).delete()
+        return Response(status=status.HTTP_200_OK)
