@@ -70,6 +70,28 @@ class ItemListDetails(APIView):
 class ItemListMixins(mixins.ListModelMixin,generics.GenericAPIView):
     queryset = Items.objects.all()
     serializer_class = ItemSerializer
-    
+
     def get(self,request,*args,**kwargs):
         return self.list(request,*args,**kwargs) 
+
+
+class ItemDetailMixin(mixins.RetrieveModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.CreateModelMixin,
+                      generics.GenericAPIView,):
+
+    serializer_class = ItemSerializer
+    queryset = Items.objects.all()
+
+    def get(self,request,*args, **kwargs):
+        return self.retrieve(request,*args, **kwargs) 
+
+    def put(self,request,*args, **kwargs):
+        return self.update(request,*args, **kwargs) 
+
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+
+    def delete(self,request,*args,**kwargs):
+        return self.destroy(request,*args,**kwargs)
