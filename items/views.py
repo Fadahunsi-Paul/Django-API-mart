@@ -7,6 +7,9 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .tests  import Buyer
 from rest_framework import status
+from rest_framework import mixins
+from rest_framework import generics
+
 
 @api_view(['GET','POST']) 
 @permission_classes([IsAuthenticated])
@@ -41,6 +44,7 @@ class ItemListDetails(APIView):
         serializer_class = ItemSerializer(list_of_items,many=True)
         return Response (serializer_class.data)
 
+
     #Create an Item
     def post(self,request):
         serializer_obj = ItemSerializer(data=request.data)
@@ -62,3 +66,10 @@ class ItemListDetails(APIView):
     def delete(self,request,id):
         item = Items.objects.filter(item_id =id).delete()
         return Response(status=status.HTTP_200_OK)
+
+class ItemListMixins(mixins.ListModelMixin,generics.GenericAPIView):
+    queryset = Items.objects.all()
+    serializer_class = ItemSerializer
+    
+    def get(self,request,*args,**kwargs):
+        return self.list(request,*args,**kwargs) 
