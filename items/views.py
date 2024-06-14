@@ -11,6 +11,7 @@ from rest_framework import mixins
 from rest_framework import generics
 
 
+
 @api_view(['GET','POST']) 
 @permission_classes([IsAuthenticated])
 def list_of_items(request):
@@ -95,3 +96,8 @@ class ItemDetailMixin(mixins.RetrieveModelMixin,
 
     def delete(self,request,*args,**kwargs):
         return self.destroy(request,*args,**kwargs)
+
+#Generic Api Views
+class ItemListGenerics(generics.ListAPIView):
+    queryset = Items.objects.all()
+    serializer_class = ItemSerializer

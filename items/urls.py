@@ -9,4 +9,5 @@ urlpatterns = [
     path('item_detail/<int:id>/',ItemListDetails.as_view(),name='item_detail'),
     path('itemMixin/',views.ItemListMixins.as_view(),name= 'item_mixin'),
     path('itemDetailMixin/<int:pk>/',views.ItemDetailMixin.as_view(),name='item_detail_mixin'),
+    path('itemListGenerics/',views.ItemListGenerics.as_view(),name= 'item_generics'),
 ]
